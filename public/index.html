@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Polis Apts</h1>
+            <div class="controls">
+                <select id="roomSelector" class="room-selector" style="display: none;">
+                    <option value="jason">Jason</option>
+                    <option value="smile">Smile</option>
+                    <option value="maria">Maria</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="navigation">
+            <div class="nav-controls">
+                <button id="prevMonthBtn" class="btn btn-secondary">← Prev</button>
+                <input type="month" id="monthPicker" class="month-picker">
+                <button id="nextMonthBtn" class="btn btn-secondary">Next →</button>
+            </div>
+            <div class="filters">
+                <select id="filterDropdown" class="filter-dropdown">
+                    <option value="all">All Bookings</option>
+                    <option value="airbnb">Airbnb Only</option>
+                    <option value="booking">Booking.com Only</option>
+                    <option value="direct">Direct Bookings Only</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="calendar" class="calendar">
+            <div class="loading">Loading bookings...</div>
+        </div>
+
+        <aside id="bookingDetails" class="booking-details hidden" aria-live="polite"></aside>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

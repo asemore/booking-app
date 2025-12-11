@@ -1,0 +1,582 @@
+:root {
+    --day-width: 40px;
+    --month-label-height: 28px;
+}
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Room selector */
+.room-selector {
+    padding: 0.5rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+/* Navigation */
+.navigation {
+    padding: 1rem;
+    background: white;
+    border-bottom: 2px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.nav-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.month-picker {
+    padding: 0.5rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.filter-dropdown {
+    padding: 0.5rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.btn-primary {
+    background: rgba(255, 255, 255, 0.9);
+    color: #667eea;
+}
+
+.btn-primary:hover {
+    background: white;
+}
+
+.btn-primary.active {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5568d3;
+}
+
+.btn-secondary:active {
+    transform: scale(0.98);
+}
+
+/* Calendar container */
+.calendar {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    padding: 0rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: auto;
+    min-width: 100%;
+    position: relative;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.muted {
+    color: #6b7280;
+}
+
+.booking-bar.selected {
+    outline: 3px solid rgba(102, 126, 234, 0.6);
+    outline-offset: 1px;
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.35);
+    z-index: 5;
+}
+
+.booking-details {
+    padding: 1.5rem;
+    background: #f3f4f6;
+    display: flex;
+    justify-content: center;
+}
+
+.booking-details-card {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
+    padding: 1.5rem;
+    position: relative;
+}
+
+.booking-details-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.booking-details-header h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.booking-details-chip {
+    background: #e8edff;
+    color: #4a56a6;
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.booking-details-grid {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.booking-details-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+}
+
+.booking-detail-label {
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.booking-detail-value {
+    color: #1f2933;
+    text-align: right;
+    font-weight: 500;
+}
+
+.booking-details-row-notes {
+    align-items: flex-start;
+}
+
+.booking-detail-notes {
+    text-align: left;
+    display: block;
+    white-space: pre-line;
+    max-width: 100%;
+}
+
+.booking-detail-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.booking-detail-link:hover,
+.booking-detail-link:focus {
+    text-decoration: underline;
+}
+
+.booking-details-empty {
+    color: #6b7280;
+    text-align: center;
+    padding: 0.75rem 0;
+}
+
+.month-labels {
+    display: flex;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 25;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.month-label-spacer {
+    width: 100px;
+    background: #f9f9f9;
+    border-right: 2px solid #e0e0e0;
+    position: sticky;
+    left: 0;
+    z-index: 25;
+}
+
+.month-label-track {
+    position: relative;
+    flex: 0 0 auto;
+    height: var(--month-label-height);
+}
+
+.month-label {
+    position: absolute;
+    top: 4px;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #444;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* Room row */
+.room-row {
+    display: grid;
+    grid-template-columns: 100px max-content;
+    border-bottom: 1px solid #e0e0e0;
+    min-height: 60px;
+}
+
+.room-name {
+    padding: 1rem;
+    font-weight: 600;
+    background: #f9f9f9;
+    border-right: 2px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    left: 0;
+    z-index: 10;
+}
+
+.room-calendar {
+    position: relative;
+    min-height: 60px;
+}
+
+/* Date header */
+.date-header {
+    display: flex;
+    border-bottom: 2px solid #e0e0e0;
+    position: sticky;
+    top: var(--month-label-height);
+    background: white;
+    z-index: 20;
+    margin-bottom: 0.5rem;
+}
+
+.date-header-spacer {
+    width: 100px;
+    background: #f9f9f9;
+    border-right: 2px solid #e0e0e0;
+    position: sticky;
+    left: 0;
+    z-index: 21;
+}
+
+.date-cells {
+    display: flex;
+    flex: 0 0 auto;
+}
+
+.date-cell {
+    min-width: var(--day-width);
+    width: var(--day-width);
+    padding: 0.5rem;
+    text-align: center;
+    border-right: 1px solid #f0f0f0;
+    font-size: 0.85rem;
+}
+
+.date-cell.today {
+    background: #fff9e6;
+    font-weight: 600;
+}
+
+.date-cell .day-name {
+    font-size: 0.7rem;
+    color: #888;
+    display: block;
+}
+
+.date-cell .day-number {
+    font-weight: 600;
+    display: block;
+}
+
+.date-cell.weekend {
+    background: #f9f9f9;
+}
+
+/* Booking bars */
+.booking-bar {
+    position: absolute;
+    height: 30px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    overflow: hidden;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.booking-bar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.booking-bar.airbnb {
+    background: linear-gradient(135deg, #FF5A5F 0%, #FF385C 100%);
+}
+
+.booking-bar.direct {
+    background: linear-gradient(135deg, #f0f0f0 0%, #d9d9d9 100%);
+    color: #000000;
+    border: 1px solid #333;
+}
+
+.booking-bar.booking {
+    background: linear-gradient(135deg, #003580 0%, #0057B8 100%);
+}
+
+/* Loading state */
+.loading {
+    padding: 2rem;
+    text-align: center;
+    color: #888;
+    font-size: 1.1rem;
+}
+
+/* Error state */
+.error {
+    padding: 2rem;
+    text-align: center;
+    color: #d32f2f;
+}
+
+/* Responsive design - Mobile optimization */
+@media (max-width: 768px) {
+    :root {
+        --day-width: 32px;
+        --month-label-height: 24px;
+    }
+    .month-label-spacer {
+        width: 80px;
+    }
+    .header {
+        padding: 0;
+    }
+    
+    .header h1 {
+        font-size: 1.25rem;
+        width: 100%;
+    }
+    
+    .controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .navigation {
+        padding: 0.75rem;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .nav-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .filters {
+        width: 100%;
+    }
+    
+    .filter-dropdown,
+    .room-selector {
+        width: 100%;
+    }
+    
+    .calendar {
+        padding: 0.5rem;
+    }
+
+    .booking-details {
+        padding: 1rem;
+    }
+
+    .booking-details-card {
+        max-width: 100%;
+        padding: 1.25rem;
+    }
+
+    .booking-details-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+
+    .booking-detail-value {
+        text-align: left;
+        width: 100%;
+    }
+    
+    .room-name {
+        width: 80px;
+        padding: 0.75rem 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .room-row {
+        grid-template-columns: 80px max-content;
+    }
+    
+    .date-header-spacer {
+        width: 80px;
+    }
+    
+    .date-cell {
+        padding: 0.4rem;
+    }
+    
+    .booking-bar {
+        height: 28px;
+        font-size: 0.7rem;
+        padding: 0 0.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --day-width: 28px;
+        --month-label-height: 22px;
+    }
+    .month-label-spacer {
+        width: 70px;
+    }
+    .header h1 {
+        font-size: 1.1rem;
+    }
+    
+    .btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .room-name {
+        width: 70px;
+        font-size: 0.85rem;
+    }
+    
+    .room-row {
+        grid-template-columns: 70px max-content;
+    }
+    
+    .date-header-spacer {
+        width: 70px;
+    }
+    
+    .date-cell {
+        padding: 0.3rem;
+        font-size: 0.75rem;
+    }
+
+    .booking-details-card {
+        padding: 1rem;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+    .btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .booking-bar {
+        min-height: 36px;
+    }
+}
+
+/* Scrollbar styling */
+.calendar::-webkit-scrollbar {
+    height: 8px;
+}
+
+.calendar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.calendar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.calendar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
